@@ -14,6 +14,7 @@ import numpy as np
 #import opus                   #necessary for using voice channel
 from random import randint    #generate pseudorandom numbers
 import re
+import os
 import string
 import asyncio
 from discord.ext import commands
@@ -298,12 +299,11 @@ async def on_message(message):
         
     elif (message.mention_everyone):
         #cli-bot will complain if a message mentions everyone
-        if(spongerob % 2 == 0):
-            file = './1.jpg'
-        if(spongerob % 2 == 1):
-            file = './2.jpg'
-        if(kisses == 100):
-            file = './3.png'
+        reactionImages = os.listdir('./everyone/')
+        everyone = randint(0,len(reactionImages)-1)
+        if(everyone==0 and spongerob > 1):
+          everyone = randint(1,len(reactionImages)-1)
+        file = './everyone/{}.jpg'.format(everyone)
         await clibot.send_file(message.channel, file)
         
     #elif ('boys' in message.content.lower()):
