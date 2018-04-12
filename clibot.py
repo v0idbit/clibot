@@ -299,7 +299,7 @@ async def on_message(message):
         
     elif (message.mention_everyone):
         #cli-bot will complain if a message mentions everyone
-        reactionImages = os.listdir('./everyone/')
+        reactionImages = os.listdir('./everyone')
         everyone = randint(0,len(reactionImages)-1)
         if(everyone==0 and spongerob > 1):
           everyone = randint(1,len(reactionImages)-1)
