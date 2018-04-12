@@ -1,6 +1,7 @@
 #-----------------------------------------------------------------------
 #   Cli-Bot - discord bot dedicated to shit posting and other fun
-#   Authors: Caleb Reiter,
+#   Authors: WhiteTrick
+#   Contributors: v0idbit
 #-----------------------------------------------------------------------
 #import packages
 import discord                #discord API
@@ -301,6 +302,8 @@ async def on_message(message):
             file = './1.jpg'
         if(spongerob % 2 == 1):
             file = './2.jpg'
+        if(kisses == 100):
+            file = './3.png'
         await clibot.send_file(message.channel, file)
         
     #elif ('boys' in message.content.lower()):
