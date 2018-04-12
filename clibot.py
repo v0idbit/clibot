@@ -18,27 +18,23 @@ import os
 import string
 import asyncio
 from discord.ext import commands
+from discord.ext.commands import Bot
 #-----------------------------------------------------------------------
-
-# https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
-#bot = commands.Bot(command_prefix='$')
-#
-#@bot.command()
-#async def gcd(ctx, arg1, arg2):
-#    m = 1
-#    R = [arg1, arg2]
-#    Q = ['*']
-#
-#    while not(R[m] == 0):
-#        Q.append(int(R[m-1]/R[m]))
-#        R.append(R[m-1]-Q[m]*R[m])
-#        m += 1
-#    m -= 1
-#    await ctx.send(R[m])
-#
-#@bot.command()
-#async def test(ctx, arg):
-#    await ctx.send(arg)
+marine1 = "What the fuck did you just fucking say about me, you little bitch?"
+marine2 = "I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills."
+marine3 = "I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces."
+marine4 = "You are nothing to me but just another target."
+marine5 = "I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words."
+marine6 = "You think you can get away with saying that shit to me over the Internet?"
+marine7 = "Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot."
+marine8 = "The storm that wipes out the pathetic little thing you call your life."
+marine9 = "You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands."
+marine10 = "Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe..."
+marine11 = "your miserable ass off the face of the continent, you little shit."
+marine12 = "If only you could have known what unholy retribution your little \“clever\” comment was about to bring down upon you, maybe you would have held your fucking tongue."
+marine13 = "But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot."
+marine14 = "I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo."
+marinepasta = [marine1, marine2, marine3, marine4, marine5, marine6, marine7, marine8, marine9, marine10, marine11, marine12]
 
 #set logging level: logs to Command Line Interface
 logging.basicConfig(level=logging.INFO)
@@ -67,22 +63,27 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
         
     raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
-#def gcd(a, b):
-#    m = 1
-#    R = [a, b]
-#    Q = ['*']
-#
-#    while not(R[m] == 0):
-#        Q.append(int(R[m-1]/R[m]))
-#        R.append(R[m-1]-Q[m]*R[m])
-#        m += 1
-#    m -= 1
-#    return R[m]
 
 #initialize game that Clibot will be playing
 playing_game = discord.Game(name="with myself")
 #global voice
 #global player
+
+# https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
+bot = commands.Bot(command_prefix='$')
+
+@bot.command()
+async def gcd(ctx, arg1, arg2):
+    m = 1
+    R = [arg1, arg2]
+    Q = ['*']
+
+    while not(R[m] == 0):
+        Q.append(int(R[m-1]/R[m]))
+        R.append(R[m-1]-Q[m]*R[m])
+        m += 1
+    m -= 1
+    await ctx.send(R[m])
 
 @clibot.event
 async def on_ready():
@@ -159,6 +160,9 @@ async def on_message(message):
             await clibot.add_reaction(message, '\U0001F633')
         if(any(word in ['hate', 'h8'] for word in message.content.lower().translate(translator).split())):
             await clibot.add_reaction(message, emoji=':absoluteshit:296132005203148800')
+            for marine in marinepasta:
+                await clibot.send_message(message.channel, marine, tts=True)
+                asyncio.sleep(2)
         if(any(word in ['annoy', 'annoying'] for word in message.content.lower().translate(translator).split())):
             await clibot.add_reaction(message, '😘')
             
@@ -371,7 +375,12 @@ async def on_message(message):
             and message.author.name != 'cli-bot'):
         file = './immediately.png'
         await clibot.send_file(message.channel, file)
-    
+
+@bot.command()
+async def test(ctx, arg):
+    await ctx.send(arg)
+
+
 #==============================================================================
 #    elif (('super secret password') in message.content.lower()
 #            and message.author.name != 'cli-bot'):
