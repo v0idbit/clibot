@@ -303,7 +303,7 @@ async def on_message(message):
         
     elif (message.mention_everyone):
         #cli-bot will complain if a message mentions everyone
-        reactionImages = os.listdir('./everyone/')
+        reactionImages = os.listdir('./everyone')
         everyone = randint(0,len(reactionImages)-1)
         if(everyone==0 and spongerob > 1):
           everyone = randint(1,len(reactionImages)-1)
@@ -317,6 +317,14 @@ async def on_message(message):
         #    mentioning everyone; this is intentional
         content = '@everyone'
         await clibot.send_message(message.channel, content)
+    
+    elif(any(word in ['dick', 'cheney'] for word in message.content.lower().translate(translator).split())):
+        #cli-bot responds appropriately to someone referring to our
+        #    lord and saviour Dick Cheney
+        reactionImages = os.listdir('./dickpics')
+        everyone = randint(0,len(reactionImages)-1)
+        file = './dickpics/{}.jpg'.format(everyone)
+        await clibot.send_file(message.channel, file)
         
     elif ((clibot.user.mentioned_in(message)) and
             ('heal all' in message.content.lower())
