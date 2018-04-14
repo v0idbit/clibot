@@ -273,7 +273,7 @@ async def on_message(message):
     elif (message.content.startswith('cliroll')):
         await clibot.send_message(message.channel, 'wrong')
     
-    matchObj = re.match(r'^..(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
+    matchObj = re.match(r'^\.\.(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
     if (matchObj):
         content = matchObj.group(2)
         offset = int(matchObj.group(1))
