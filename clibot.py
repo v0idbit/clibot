@@ -63,6 +63,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
         
     raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
+bot = commands.Bot(command_prefix = '$$')
 
 #initialize game that Clibot will be playing
 playing_game = discord.Game(name="with myself")
@@ -70,20 +71,24 @@ playing_game = discord.Game(name="with myself")
 #global player
 
 # https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
-#bot = commands.Bot(command_prefix='$')
-#
-#@bot.command()
-#async def gcd(ctx, arg1, arg2):
-#    m = 1
-#    R = [arg1, arg2]
-#    Q = ['*']
-#
-#    while not(R[m] == 0):
-#        Q.append(int(R[m-1]/R[m]))
-#        R.append(R[m-1]-Q[m]*R[m])
-#        m += 1
-#    m -= 1
-#    await ctx.send(R[m])
+@bot.command(pass_context = True)
+async def gcd(ctx, a, b):
+    a = int(a)
+    b = int(b)
+    
+    if(a < b):
+        A = a
+        R = B = b     
+    else:
+        A = b
+        R = B = a
+    while(R != 0):
+        R = A % B
+        if(R == 0):
+            await bot.say("The GDC of {} and {} is {}".format(a, b, B))
+            return B
+        A = B
+        B = R
 
 @clibot.event
 async def on_ready():
