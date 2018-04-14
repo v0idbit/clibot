@@ -326,14 +326,6 @@ async def on_message(message):
         file = './dickpics/{}.jpg'.format(everyone)
         await clibot.send_file(message.channel, file)
         
-    elif(any(word in ['dick','cheney'] for word in message.content.lower().translate(translator).split())):
-        #cli-bot responds appropriately to a user referring to
-        #    our lord and saviour Dick Cheney
-        reactionImages = os.listdir('./dickpics')
-        everyone = randint(0,len(reactionImages)-1)
-        file = './dickpics/{}.jpg'.format(everyone)
-        await clibot.send_file(message.channel, file)
-        
     elif ((clibot.user.mentioned_in(message)) and
             ('heal all' in message.content.lower())
             and (message.author.name != 'cli-bot')):
