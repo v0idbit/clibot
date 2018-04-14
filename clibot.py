@@ -4,7 +4,9 @@
 #   Contributors: v0idbit
 #-----------------------------------------------------------------------
 #import packages
-import discord                #discord API
+import discord
+from discord.ext import commands
+from discord.ext.commands import bot                #discord API
 from discord import opus
 import logging                #used for logging errors
 from math import e
@@ -17,8 +19,6 @@ import re
 import os
 import string
 import asyncio
-from discord.ext import commands
-from discord.ext.commands import Bot
 #-----------------------------------------------------------------------
 marine1 = "What the fuck did you just fucking say about me, you little bitch?"
 marine2 = "I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills."
@@ -63,14 +63,12 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
         
     raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
-bot = commands.Bot(command_prefix = '$$')
+bot = commands.Bot(command_prefix = '#')
 
 #initialize game that Clibot will be playing
 playing_game = discord.Game(name="with myself")
 #global voice
 #global player
-
-# https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
 
 @clibot.event
 async def on_ready():
@@ -100,7 +98,7 @@ async def gcd(ctx, a, b):
     while(R != 0):
         R = A % B
         if(R == 0):
-            await bot.say("The GDC of {} and {} is {}".format(a, b, B))
+            await bot.say("The GCD of {} and {} is {}".format(a, b, B))
             return B
         A = B
         B = R
