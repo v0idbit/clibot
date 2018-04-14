@@ -71,6 +71,21 @@ playing_game = discord.Game(name="with myself")
 #global player
 
 # https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
+
+@clibot.event
+async def on_ready():
+    '''
+    called when clibot finishes preparing data received from Discord
+    '''
+    print('Logged in as')
+    print(clibot.user.name)
+    print(clibot.user.id)
+    print('--------')
+    print('invite URL')
+    print(discord.utils.oauth_url('352256816790503425'))
+    load_opus_lib()
+    await clibot.change_presence(game=playing_game)
+
 @bot.command(pass_context = True)
 async def gcd(ctx, a, b):
     a = int(a)
@@ -89,21 +104,6 @@ async def gcd(ctx, a, b):
             return B
         A = B
         B = R
-
-@clibot.event
-async def on_ready():
-    '''
-    called when clibot finishes preparing data received from Discord
-    '''
-    print('Logged in as')
-    print(clibot.user.name)
-    print(clibot.user.id)
-    print('--------')
-    print('invite URL')
-    print(discord.utils.oauth_url('352256816790503425'))
-    load_opus_lib()
-    await clibot.change_presence(game=playing_game)
-
 
 @clibot.event
 async def on_message_delete(message):
