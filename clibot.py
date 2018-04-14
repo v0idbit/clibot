@@ -70,20 +70,20 @@ playing_game = discord.Game(name="with myself")
 #global player
 
 # https://discordpy.readthedocs.io/en/rewrite/ext/commands/commands.html
-bot = commands.Bot(command_prefix='$')
-
-@bot.command()
-async def gcd(ctx, arg1, arg2):
-    m = 1
-    R = [arg1, arg2]
-    Q = ['*']
-
-    while not(R[m] == 0):
-        Q.append(int(R[m-1]/R[m]))
-        R.append(R[m-1]-Q[m]*R[m])
-        m += 1
-    m -= 1
-    await ctx.send(R[m])
+#bot = commands.Bot(command_prefix='$')
+#
+#@bot.command()
+#async def gcd(ctx, arg1, arg2):
+#    m = 1
+#    R = [arg1, arg2]
+#    Q = ['*']
+#
+#    while not(R[m] == 0):
+#        Q.append(int(R[m-1]/R[m]))
+#        R.append(R[m-1]-Q[m]*R[m])
+#        m += 1
+#    m -= 1
+#    await ctx.send(R[m])
 
 @clibot.event
 async def on_ready():
@@ -384,9 +384,9 @@ async def on_message(message):
         file = './immediately.png'
         await clibot.send_file(message.channel, file)
 
-@bot.command()
-async def test(ctx, arg):
-    await ctx.send(arg)
+#@bot.command()
+#async def test(ctx, arg):
+#    await ctx.send(arg)
 
 
 #==============================================================================
