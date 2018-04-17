@@ -22,19 +22,17 @@ import asyncio
 #-----------------------------------------------------------------------
 marine1 = "What the fuck did you just fucking say about me, you little bitch?"
 marine2 = "I’ll have you know I graduated top of my class in the Navy Seals, and I’ve been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills."
-marine3 = "I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces."
-marine4 = "You are nothing to me but just another target."
+marine3 = "I am trained in gorilla warfare and I’m the top sniper in the entire US armed forces. You are nothing to me but just another target."
 marine5 = "I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words."
 marine6 = "You think you can get away with saying that shit to me over the Internet?"
 marine7 = "Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot."
 marine8 = "The storm that wipes out the pathetic little thing you call your life."
 marine9 = "You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands."
-marine10 = "Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe..."
-marine11 = "your miserable ass off the face of the continent, you little shit."
+marine10 = "Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps"
+marine11 = "and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit."
 marine12 = 'If only you could have known what unholy retribution your little “clever” comment was about to bring down upon you, maybe you would have held your fucking tongue.'
-marine13 = "But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot."
-marine14 = "I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo."
-marinepasta = [marine1, marine2, marine3, marine4, marine5, marine6, marine7, marine8, marine9, marine10, marine11, marine12]
+marine13 = "But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo."
+marinepasta = [marine1, marine2, marine3, marine5, marine6, marine7, marine8, marine9, marine10, marine11, marine12, marine13]
 
 #set logging level: logs to Command Line Interface
 logging.basicConfig(level=logging.INFO)
@@ -84,24 +82,29 @@ async def on_ready():
     load_opus_lib()
     await clibot.change_presence(game=playing_game)
 
+
+'''
+Found the issue that stops bot.command from working with on_message(message), but now it throws an exception.
+This function works find on other bots. More debugging needed.
+'''
 @bot.command(pass_context = True)
 async def gcd(ctx, a, b):
-    a = int(a)
-    b = int(b)
-    
-    if(a < b):
-        A = a
-        R = B = b     
-    else:
-        A = b
-        R = B = a
-    while(R != 0):
-        R = A % B
-        if(R == 0):
-            await bot.say("The GCD of {} and {} is {}".format(a, b, B))
-            return B
-        A = B
-        B = R
+   a = int(a)
+   b = int(b)
+   
+   if(a < b):
+       A = a
+       R = B = b     
+   else:
+       A = b
+       R = B = a
+   while(R != 0):
+       R = A % B
+       if(R == 0):
+           await bot.say("GCD({},{}) = {}".format(a, b, B))
+           break
+       A = B
+       B = R
 
 @clibot.event
 async def on_message_delete(message):
@@ -118,6 +121,7 @@ async def on_message_delete(message):
 
 @clibot.event
 async def on_message(message):
+    await bot.process_commands(message)
     spongerob = randint(1,100)
     kisses = randint(1,100)
     if (len(message.content) > 0 and spongerob == 1
@@ -165,7 +169,6 @@ async def on_message(message):
             await clibot.add_reaction(message, emoji=':absoluteshit:296132005203148800')
             for marine in marinepasta:
                 await clibot.send_message(message.channel, marine, tts=True)
-                asyncio.sleep(2)
         if(any(word in ['annoy', 'annoying'] for word in message.content.lower().translate(translator).split())):
             await clibot.add_reaction(message, '😘')
             
@@ -276,11 +279,12 @@ async def on_message(message):
     elif (message.content.startswith('cliroll')):
         await clibot.send_message(message.channel, 'wrong')
     
-    reee = re.match(r".*(ree+).*", message.content.lower(), re.I)
-    if(reee and message.author.name != "cli-bot"):
-        reee_trigger = reee.group(1).count('e')
+    ree = re.findall(r"re{2,}", message.content, re.I) # re.match(r".*(ree+).*", message.content, re.I)
+    if(ree and message.author.name != "cli-bot"):
+        ree_trigger = ree.count('e')
+        reee = ''.join(ree)
         # awaiting images to trigger with
-        await clibot.send_message(message.channel, reee.group(1).upper(), tts = True)
+        await clibot.send_message(message.channel, reee.upper(), tts = True)
 
     matchObj = re.match(r'^\.\.(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
     if (matchObj):
@@ -393,9 +397,9 @@ async def on_message(message):
         file = './immediately.png'
         await clibot.send_file(message.channel, file)
 
-#@bot.command()
-#async def test(ctx, arg):
-#    await ctx.send(arg)
+@bot.command()
+async def repeater(ctx, arg):
+   await ctx.send(arg)
 
 
 #==============================================================================
