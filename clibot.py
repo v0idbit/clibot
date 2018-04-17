@@ -276,7 +276,7 @@ async def on_message(message):
     elif (message.content.startswith('cliroll')):
         await clibot.send_message(message.channel, 'wrong')
     
-    reee = re.match(r".*(re+).*", message.content.lower(), re.I)
+    reee = re.match(r".*(ree+).*", message.content.lower(), re.I)
     if(reee and message.author.name != "cli-bot"):
         reee_trigger = reee.group(1).count('e')
         # awaiting images to trigger with
