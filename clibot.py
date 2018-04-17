@@ -281,8 +281,8 @@ async def on_message(message):
     
     ree = re.findall(r"re{2,}", message.content, re.I) # re.match(r".*(ree+).*", message.content, re.I)
     if(ree and message.author.name != "cli-bot"):
-        ree_trigger = ree.count('e')
         reee = ''.join(ree)
+        ree_trigger = reee.count('e')
         # awaiting images to trigger with
         await clibot.send_message(message.channel, reee.upper(), tts = True)
 
