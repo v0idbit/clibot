@@ -31,7 +31,7 @@ marine8 = "The storm that wipes out the pathetic little thing you call your life
 marine9 = "You’re fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that’s just with my bare hands."
 marine10 = "Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe..."
 marine11 = "your miserable ass off the face of the continent, you little shit."
-marine12 = "If only you could have known what unholy retribution your little \“clever\” comment was about to bring down upon you, maybe you would have held your fucking tongue."
+marine12 = 'If only you could have known what unholy retribution your little “clever” comment was about to bring down upon you, maybe you would have held your fucking tongue.'
 marine13 = "But you couldn’t, you didn’t, and now you’re paying the price, you goddamn idiot."
 marine14 = "I will shit fury all over you and you will drown in it. You’re fucking dead, kiddo."
 marinepasta = [marine1, marine2, marine3, marine4, marine5, marine6, marine7, marine8, marine9, marine10, marine11, marine12]
@@ -126,7 +126,7 @@ async def on_message(message):
         #    it's not from cli-bot itself 
         msg = message.clean_content
         print(msg)
-        new_msg = list(msg);
+        new_msg = list(msg)
         
         for i in range(0, len(msg)):
             #iterates over the message as a char array and swaps the
@@ -276,6 +276,12 @@ async def on_message(message):
     elif (message.content.startswith('cliroll')):
         await clibot.send_message(message.channel, 'wrong')
     
+    reee = re.match(r".*(re+).*", message.content.lower(), re.I)
+    if(reee):
+        reee_trigger = reee.group(1).count('e')
+        # awaiting images to trigger with
+        await clibot.send_message(message.channel, reee.group(1).upper(), tts = True)
+
     matchObj = re.match(r'^\.\.(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
     if (matchObj):
         content = matchObj.group(2)
