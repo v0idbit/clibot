@@ -58,7 +58,7 @@ def GCD(a,b):
         A = B
         B = R
 
-translator = str.maketrans('', '', string.punctuation)
+remove_punctuation = str.maketrans('', '', string.punctuation)
 
 def load_opus_lib(opus_libs=OPUS_LIBS):
     '''
@@ -107,7 +107,7 @@ async def gcd(ctx, arg):
     output = reduce(GCD, mytuple)
     embed = discord.Embed(color = 0x00ff00)
     embed.add_field(name = "Greatest Common Denominator", value = "GCD{} = {}".format(mytuple, output))
-    await bot.say(embed=embed)
+    await clibot.send_message(ctx.message.channel, embed=embed)
 
 @clibot.event
 async def on_message_delete(message):
@@ -164,28 +164,28 @@ async def on_message(message):
         await clibot.add_reaction(message, '\U0001F1F3')
         await clibot.add_reaction(message, '\U0001F1F9')
 
-    if(any(word in ['cli','clibot','cli-bot'] for word in message.content.lower().translate(translator).split())
+    if(any(word in ['cli','clibot','cli-bot'] for word in message.content.lower().translate(remove_punctuation).split())
         and message.author.name != "cli-bot"):
-        if(any(word in ['love', 'luv'] for word in message.content.lower().translate(translator).split())):
+        if(any(word in ['love', 'luv'] for word in message.content.lower().translate(remove_punctuation).split())):
             await clibot.add_reaction(message, '\U0001F633')
-        if(any(word in ['hate', 'h8'] for word in message.content.lower().translate(translator).split())):
+        if(any(word in ['hate', 'h8'] for word in message.content.lower().translate(remove_punctuation).split())):
             await clibot.add_reaction(message, emoji=':absoluteshit:296132005203148800')
             for marine in marinepasta:
                 await clibot.send_message(message.channel, marine, tts=True)
-        if(any(word in ['annoy', 'annoying'] for word in message.content.lower().translate(translator).split())):
+        if(any(word in ['annoy', 'annoying'] for word in message.content.lower().translate(remove_punctuation).split())):
             await clibot.add_reaction(message, '😘')
             
-    if(any(word in ['sex','fuck','penetration','penetrate','penetrating','fucking','fucked','fucker','fuckers'] for word in message.content.lower().translate(translator).split())
+    if(any(word in ['sex','fuck','penetration','penetrate','penetrating','fucking','fucked','fucker','fuckers'] for word in message.content.lower().translate(remove_punctuation).split())
         and message.author.name != "cli-bot"):
             await clibot.add_reaction(message, '👉🏿')
             await clibot.add_reaction(message, '👌🏻')
             
-    if('better' in message.content.lower().translate(translator).split()
-        and 'idea' in message.content.lower().translate(translator).split()
+    if('better' in message.content.lower().translate(remove_punctuation).split()
+        and 'idea' in message.content.lower().translate(remove_punctuation).split()
         and message.author.name != "cli-bot"):
         await clibot.add_reaction(message, emoji=':helno:370408318352490496')
 
-    if ('make you jizz' in message.content.lower().translate(translator)
+    if ('make you jizz' in message.content.lower().translate(remove_punctuation)
         and message.author.name != 'cli-bot'):
        await clibot.send_message(message.channel, 'cuzzi with me tonight')
         
@@ -327,14 +327,14 @@ async def on_message(message):
         await clibot.send_file(message.channel, file)
         
     #elif ('boys' in message.content.lower()):
-    elif(any(word in ['boys', 'bois','boyz', 'boiz'] for word in message.content.lower().translate(translator).split())):
+    elif(any(word in ['boys', 'bois','boyz', 'boiz'] for word in message.content.lower().translate(remove_punctuation).split())):
         #cli-bot will mention everyone if a message contains "boys"
         #consequently, cli-bot will then complain about itself
         #    mentioning everyone; this is intentional
         content = '@everyone'
         await clibot.send_message(message.channel, content)
     
-    elif(any(word in ['dick', 'cheney'] for word in message.content.lower().translate(translator).split())):
+    elif(any(word in ['dick', 'cheney'] for word in message.content.lower().translate(remove_punctuation).split())):
         #cli-bot responds appropriately to someone referring to our
         #    lord and saviour Dick Cheney
         reactionImages = os.listdir('./dickpics')
@@ -389,20 +389,20 @@ async def on_message(message):
             content = 'Scoliosis!'
         await clibot.send_message(message.channel, content)
             
-    elif (('praise the sun' in message.content.lower().translate(translator))
+    elif (('praise the sun' in message.content.lower().translate(remove_punctuation))
             and message.author.name != 'cli-bot'):
         file = './praisethesun.jpg'
         await clibot.send_file(message.channel, file,
                                content='Praise the sun!')
         
-    elif (('cheese pizza' in message.content.lower().translate(translator))
+    elif (('cheese pizza' in message.content.lower().translate(remove_punctuation))
             and message.author.name != 'cli-bot'):
         file = './immediately.png'
         await clibot.send_file(message.channel, file)
 
-@bot.command()
+@bot.command(pass_context = True)
 async def repeater(ctx, arg):
-   await ctx.send(arg)
+    await clibot.send_message(ctx.message.channel, arg)
 
 
 #==============================================================================
