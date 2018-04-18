@@ -84,8 +84,7 @@ async def on_ready():
 
 
 '''
-Found the issue that stops bot.command from working with on_message(message), but now it throws an exception.
-This function works find on other bots. More debugging needed.
+
 '''
 @bot.command(pass_context = True)
 async def gcd(ctx, a, b):
@@ -101,7 +100,7 @@ async def gcd(ctx, a, b):
    while(R != 0):
        R = A % B
        if(R == 0):
-           await bot.say("GCD({},{}) = {}".format(a, b, B))
+           await clibot.send_message(ctx.message.channel, "GCD({},{}) = {}".format(a, b, B))
            break
        A = B
        B = R
