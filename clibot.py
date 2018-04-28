@@ -168,7 +168,7 @@ async def on_message(message):
         and message.author.name != "cli-bot"):
         if(any(word in ['love', 'luv'] for word in message.content.lower().translate(remove_punctuation).split())):
             await clibot.add_reaction(message, '\U0001F633')
-        if(any(word in ['hate', 'h8'] for word in message.content.lower().translate(remove_punctuation).split())):
+        if(any(word in ['hate', 'h8', 'fuck you'] for word in message.content.lower().translate(remove_punctuation).split())):
             await clibot.add_reaction(message, emoji=':absoluteshit:296132005203148800')
             for marine in marinepasta:
                 await clibot.send_message(message.channel, marine, tts=True)
@@ -285,9 +285,13 @@ async def on_message(message):
     ree = re.findall(r"re{2,}", message.content, re.I) # re.match(r".*(ree+).*", message.content, re.I)
     if(ree and message.author.name != "cli-bot"):
         reee = ''.join(ree)
-        ree_trigger = reee.count('e')
+        ree_trigger = reee.count('r')
         # awaiting images to trigger with
         await clibot.send_message(message.channel, reee.upper(), tts = True)
+        if ree_trigger > 5:
+            for channel in message.server.channels:
+                if channel.type == message.channel.type:
+                    await clibot.send_message(channel, reee.upper(), tts=True)
 
     matchObj = re.match(r'^\.\.(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
     if (matchObj):
