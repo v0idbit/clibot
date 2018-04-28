@@ -282,16 +282,21 @@ async def on_message(message):
     elif (message.content.startswith('cliroll')):
         await clibot.send_message(message.channel, 'wrong')
     
-    ree = re.findall(r"re{2,}", message.content, re.I) # re.match(r".*(ree+).*", message.content, re.I)
+    ree = re.findall(r"re{2,}", message.content, re.I)
     if(ree and message.author.name != "cli-bot"):
         reee = ''.join(ree)
         ree_trigger = reee.count('r')
         # awaiting images to trigger with
-        await clibot.send_message(message.channel, reee.upper(), tts = True)
         if ree_trigger > 5:
+            for member in message.server.members:
+                if member.id == "352256816790503425":
+                    target = member
             for channel in message.server.channels:
-                if channel.type == message.channel.type:
+                # print(channel.permissions_for(target).send_messages)
+                if channel.type == message.channel.type and channel.permissions_for(target).send_messages:
                     await clibot.send_message(channel, reee.upper(), tts=True)
+        else:
+            await clibot.send_message(message.channel, reee.upper(), tts=True)
 
     matchObj = re.match(r'^\.\.(-?\d+),(\s?(TRUE,)?\s?.+)$', message.content, re.I)
     if (matchObj):
