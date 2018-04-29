@@ -300,7 +300,7 @@ async def on_message(message):
         reee = ''.join(ree)
         ree_trigger = reee.count('r')
         # awaiting images to trigger with
-        if ree_trigger > 5:
+        if ree_trigger > 2000:
             for member in message.server.members:
                 if member.id == "352256816790503425":
                     target = member
