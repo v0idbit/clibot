@@ -166,8 +166,7 @@ async def on_message(message):
             and message.author.name != "cli-bot"):
         await clibot.add_reaction(message, '\U0001F48b')
 
-    if ('cunt' in message.content.lower()
-            and message.author.name != 'cli-bot'):
+    if re.search(r'cunt', message.content, re.I) and message.author.name != 'cli-bot':
         # adds some much needed emphasis to messages including the word
         #    "cunt"
         await clibot.add_reaction(message, '\U0001F1E8')
@@ -349,15 +348,17 @@ async def on_message(message):
         await clibot.send_file(message.channel, file)
 
     # elif ('boys' in message.content.lower()):
-    elif (any(word in ['boys', 'bois', 'boyz', 'boiz'] for word in
-              message.content.lower().translate(remove_punctuation).split())):
+    # elif (any(word in ['boys', 'bois', 'boyz', 'boiz'] for word in
+    #           message.content.lower().translate(remove_punctuation).split())):
+    elif re.search(r'^.*bo[yi][sz]$', message.content, re.I):
         # cli-bot will mention everyone if a message contains "boys"
         # consequently, cli-bot will then complain about itself
         #    mentioning everyone; this is intentional
         content = '@everyone'
         await clibot.send_message(message.channel, content)
 
-    elif any(word in ['dick', 'cheney'] for word in message.content.lower().translate(remove_punctuation).split()):
+    # elif any(word in ['dick', 'cheney'] for word in message.content.lower().translate(remove_punctuation).split()):
+    elif re.search(r'dick|cheney', message.content, re.I):
         # cli-bot responds appropriately to someone referring to our
         #    lord and saviour Dick Cheney
         reactionImages = os.listdir('./dickpics')
@@ -390,8 +391,7 @@ async def on_message(message):
         content = 'No. Fuck you {}.'.format(author)
         await clibot.send_message(message.channel, content)
 
-    elif ((clibot.user.mentioned_in(message))
-          and message.author.name != 'cli-bot'):
+    elif clibot.user.mentioned_in(message) and message.author.name != 'cli-bot':
         # cli-bot responds with a greeting when mentioned in a message
         #    that contains no trigger words
         # author = message.author.name # this is the original line
