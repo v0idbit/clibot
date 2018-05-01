@@ -350,7 +350,8 @@ async def on_message(message):
     # elif ('boys' in message.content.lower()):
     # elif (any(word in ['boys', 'bois', 'boyz', 'boiz'] for word in
     #           message.content.lower().translate(remove_punctuation).split())):
-    elif re.search(r'^.*bo[yi][sz]$', message.content, re.I):
+    # elif re.search(r'^.*bo[yi][sz][\W]?$', message.content, re.I):
+    elif re.search(r'bo[yi][sz]', message.content, re.I):
         # cli-bot will mention everyone if a message contains "boys"
         # consequently, cli-bot will then complain about itself
         #    mentioning everyone; this is intentional
